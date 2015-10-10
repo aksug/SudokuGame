@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Sudoku</string>
+
+    <string name="select_level">Wybierz poziom</string>
+    <string name="latwy_poziom">Łatwy</string>
+    <string name="sredni_poziom">Średni</string>
+    <string name="trudny_poziom">Trudny</string>
+</resources>

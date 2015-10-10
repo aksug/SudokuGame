@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="background">#cf9595</color>
+    <color name="big_line">#262626</color>
+    <color name="small_line">#737373</color>
+    <color name="number">#131313</color>
+    <color name="start_number">#ffffff</color>
+    <color name="selection">#f91928</color>
+    <color name="start_place">#a31a1a</color>
+    <color name="correct_numbers">#20c603</color>
+</resources>
