@@ -239,5 +239,19 @@ public class Board extends View {
 
     public void checkSolution() {//TODO
 
+        String solution = dataBoard.getBoardSolution();
+        //jesli pole nie jest aktualnie podzielone, mozna sprawdzac pola ktore byly na wstepie jako 0
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!divided_cell[i][j] && Character.getNumericValue(start_board.charAt(j + 9 * i + i)) == 0){
+                    if(user_solution[i][j] == Character.getNumericValue(solution.charAt(j + 9 * i + i))){
+                        Log.d("Rozwiazanie ","user poprwnie wypelnil pole: "+i+" "+j );
+                    }else {
+                        Log.d("Rozwiazanie ", "user zle wypelnil pole: " + i + " " + j);
+                    }
+                }
+            }
+        }
+
     }
 }
