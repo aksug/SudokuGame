@@ -2,18 +2,33 @@ package sudoku.example.com.sudoku;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Movie;
 import android.graphics.Paint;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Board extends View {
 
+    //gift
+//    private final InputStream mStream;
+//    private final Movie mMovie;
+    private long mMoviestart;
+
+
+    private String stan_gry ="W_TRACIE"; //"ZAPISZ","ZAKONCZ";
     private DataBoard dataBoard;
     private String start_board;
+    private String solution;
 
     private float width_big_square;
     private float width_small_square;
@@ -26,6 +41,7 @@ public class Board extends View {
     private boolean[][] divided_cell;
     private ArrayList<int[]> possible_numbers_squere;
     private int[][] user_solution;
+    private boolean[][] wrong_solution;
 
     private Paint background;
     private Paint edges_inside;
@@ -36,9 +52,16 @@ public class Board extends View {
     private Paint posible_numbers;
     private Paint correct_numbers;
 
+    Context context;
+
 
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
+        //gift
+     //   this.mStream = stream;
+    //    mMovie = Movie.decodeStream(mStream);
+
         init();
     }
 
@@ -50,6 +73,7 @@ public class Board extends View {
         margin = 5;
 
         divided_cell = new boolean[9][9];
+        wrong_solution = new boolean[9][9];
         //mozliwe cyfry w podzielonym kwadraciku
         possible_numbers_squere = new ArrayList<>();
         for (int i = 0; i < 81; i++) {
@@ -104,6 +128,11 @@ public class Board extends View {
 
 
     public void onDraw(Canvas canvas) {
+        //gift
+        final long now = SystemClock.uptimeMillis();
+        if (mMoviestart == 0) { mMoviestart = now; }
+
+
 
         //obramowanie i kwadrat
         canvas.drawRect(0, 0, width_big_square, width_big_square, edges_outside);
@@ -144,12 +173,23 @@ public class Board extends View {
                             ((i + 1) * width_small_square - shift_numbers),
                             numbers);
                 }
-                //liczby wpisane przez usera:
-                else if (user_solution[i][j] != 0 ) {
-                    canvas.drawText(String.valueOf(user_solution[i][j]),
+                //poprawne rozwiazanie
+                if(stan_gry.equals("ZAKONCZ") && wrong_solution[i][j]){
+                    Toast.makeText(context, "ZAKONCZ WYSWIETL ANIMACJE", Toast.LENGTH_SHORT).show();
+                    canvas.drawText(String.valueOf(solution.charAt(j + 9 * i + i)),
                             (j * width_small_square + width_Number),
                             ((i + 1) * width_small_square - width_Number),
-                            numbers);
+                            correct_numbers);
+                }
+                //liczby wpisane przez usera:
+                else if (user_solution[i][j] != 0 ) {
+
+                        canvas.drawText(String.valueOf(user_solution[i][j]),
+                                (j * width_small_square + width_Number),
+                                ((i + 1) * width_small_square - width_Number),
+                                numbers);
+
+
                 }
 
                 //UWAGA  czasami krawedzie nie rysuja sie - TODO
@@ -187,7 +227,10 @@ public class Board extends View {
                 }
             }
         }
-
+//gift
+//        final int relTime = (int)((now - mMoviestart) % mMovie.duration());
+//        mMovie.setTime(relTime);
+//        mMovie.draw(canvas, 10, 10);
     }
 
 
@@ -239,19 +282,25 @@ public class Board extends View {
 
     public void checkSolution() {//TODO
 
-        String solution = dataBoard.getBoardSolution();
+
+        solution = dataBoard.getBoardSolution();
         //jesli pole nie jest aktualnie podzielone, mozna sprawdzac pola ktore byly na wstepie jako 0
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if (!divided_cell[i][j] && Character.getNumericValue(start_board.charAt(j + 9 * i + i)) == 0){
                     if(user_solution[i][j] == Character.getNumericValue(solution.charAt(j + 9 * i + i))){
-                        Log.d("Rozwiazanie ","user poprwnie wypelnil pole: "+i+" "+j );
+                        Log.d("Rozwiazanie ","user poprwnie wypelnil pole: "+i+" "+j ); //dziala
                     }else {
-                        Log.d("Rozwiazanie ", "user zle wypelnil pole: " + i + " " + j);
+                        Log.d("Rozwiazanie ", "user zle wypelnil pole: " + i + " " + j); //dziala
+                        //anmacja ? z poprawianiem pola
+                        wrong_solution[i][j] = !wrong_solution[i][j];
+
                     }
                 }
             }
         }
+        stan_gry = "ZAKONCZ";
+        invalidate();
 
     }
 }

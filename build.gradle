@@ -24,14 +24,6 @@ task clean(type: Delete) {
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'MyAndroidKey'
-            keyPassword 'gusia1'
-            storeFile file('C:/Users/C5839/keystores/android.jks')
-            storePassword 'gusia1'
-        }
-    }
 
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -43,16 +35,24 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+       release{
+           storeFile file("my-release-key.keystore")
+           storePassword "password"
+           keyAlias "alias_name"
+           keyPassword "password"
+        }
+
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
-        foo {
-            debuggable true
-            jniDebuggable true
-            signingConfig signingConfigs.config
-        }
+
     }
 }
 
