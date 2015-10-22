@@ -80,12 +80,7 @@ public class Game extends Activity {
         Toast.makeText(getApplicationContext(), "Wcisnieto CLEAR", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        //okienko czy zapisac gre czy nie TODO
-        save();
-    }
+
 
     public void saveGame(View view) {
         save();
@@ -93,10 +88,50 @@ public class Game extends Activity {
 
     private void save() {
         //TODO
+        //zapisac do bazy danych, co z podzielona komorka? jak ja do bazy danych musze wiedziec ktora to komorka i jakie proponowane cyfry
+
+        //co zapisac?
+        // id planszy
+        // dopoki nie wrzycasz rozwiazan usera do planszy to tez rozwiazania usera i propozycje
+        //podswietlana komorke4
+        // i stworz nowy biekt Board i tam to wszytko porzucaj jako argumenty konstruktora
+//        case "latwy":
+//        latwyDao = daoSession.getLatwyDao();
+//        latwy = latwyDao.loadByRowId(number + 101);
+//        if (latwy != null) {
+//            latwyDao.delete(latwy);
+//        }
+//        latwy = new Latwy((long) number + 101,
+//                plansza.getTable_number(),
+//                plansza.getMysuggestion(),
+//                plansza.getSuggestion());
+//        latwyDao.insert(latwy);
+//        break;
+
+
     }
 
     public void endGame(View view) {
 // przegladam odpowiedzi usera i wylapuje bledne
         board.checkSolution();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //okienko czy zapisac gre czy nie TODO
+        save();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        save();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        save();
     }
 }

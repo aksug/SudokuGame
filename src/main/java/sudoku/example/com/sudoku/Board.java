@@ -173,7 +173,7 @@ public class Board extends View {
                             ((i + 1) * width_small_square - shift_numbers),
                             numbers);
                 }
-                //poprawne rozwiazanie
+                //wyswietlam poprawne rozwiazanie =
                 if(stan_gry.equals("ZAKONCZ") && wrong_solution[i][j]){
                     Toast.makeText(context, "ZAKONCZ WYSWIETL ANIMACJE", Toast.LENGTH_SHORT).show();
                     canvas.drawText(String.valueOf(solution.charAt(j + 9 * i + i)),
