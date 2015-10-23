@@ -1,9 +1,18 @@
 package sudoku.example.com.sudoku;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 public class Game extends Activity {
@@ -37,17 +46,17 @@ public class Game extends Activity {
 
     public void numberThree(View view) {
         board.setNumber(3);
-  //      Toast.makeText(getApplicationContext(), "Wcisnieto 3", Toast.LENGTH_SHORT).show();
+        //      Toast.makeText(getApplicationContext(), "Wcisnieto 3", Toast.LENGTH_SHORT).show();
     }
 
     public void numberFour(View view) {
         board.setNumber(4);
-    //    Toast.makeText(getApplicationContext(), "Wcisnieto 4", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(getApplicationContext(), "Wcisnieto 4", Toast.LENGTH_SHORT).show();
     }
 
     public void numberFive(View view) {
         board.setNumber(5);
-      //  Toast.makeText(getApplicationContext(), "Wcisnieto 5", Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(getApplicationContext(), "Wcisnieto 5", Toast.LENGTH_SHORT).show();
     }
 
     public void numberSix(View view) {
@@ -62,12 +71,12 @@ public class Game extends Activity {
 
     public void numberEight(View view) {
         board.setNumber(8);
-  //      Toast.makeText(getApplicationContext(), "Wcisnieto 8", Toast.LENGTH_SHORT).show();
+        //      Toast.makeText(getApplicationContext(), "Wcisnieto 8", Toast.LENGTH_SHORT).show();
     }
 
     public void numberNine(View view) {
         board.setNumber(9);
-    //    Toast.makeText(getApplicationContext(), "Wcisnieto 9", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(getApplicationContext(), "Wcisnieto 9", Toast.LENGTH_SHORT).show();
     }
 
     public void divideSquare(View view) {
@@ -79,7 +88,6 @@ public class Game extends Activity {
         board.backspace();
         Toast.makeText(getApplicationContext(), "Wcisnieto CLEAR", Toast.LENGTH_SHORT).show();
     }
-
 
 
     public void saveGame(View view) {
@@ -112,6 +120,32 @@ public class Game extends Activity {
     }
 
     public void endGame(View view) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup, null);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linarlayout);
+
+        final PopupWindow popupWindow = new PopupWindow(container, linearLayout.getWidth(), board.getWidth() /*z ta wartoscia jest cos nie tak, czy ona ma w ogole znaczenie*/, true);
+        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight()-popupWindow.getHeight()/2)/2);//czy to jest na srodku
+
+        Button anuluj_button = (Button)container.findViewById(R.id.anulujButton);
+        Button zakoncz_button = (Button)container.findViewById(R.id.zakonczButton);
+
+        anuluj_button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        popupWindow.dismiss();
+            }
+        });
+        zakoncz_button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        popupWindow.dismiss();
+                        // TODO go to level pages
+            }
+        });
+
+
 // przegladam odpowiedzi usera i wylapuje bledne
         board.checkSolution();
     }
@@ -123,6 +157,7 @@ public class Game extends Activity {
         //okienko czy zapisac gre czy nie TODO
         save();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
