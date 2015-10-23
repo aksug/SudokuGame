@@ -15,7 +15,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuLevels">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="sudoku.example.com.sudoku.MainActivity" />
         </activity>
         <activity
             android:name=".Game"

@@ -142,6 +142,7 @@ public class Game extends Activity {
             public void onClick(View v) {
                         popupWindow.dismiss();
                         // TODO go to level pages
+                startActivity(new Intent(getApplicationContext(), MenuLevels.class));
             }
         });
 
