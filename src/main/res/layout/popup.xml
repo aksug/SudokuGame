@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:text="Czy jesteś pewny że chcesz zakonczyć grę?" />
+            android:text="Czy rozpocząć nową grę?" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:id="@+id/zakonczButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zakoncz"
+                android:text="tak"
                 android:layout_weight="2"
                 android:layout_gravity="left"
                 android:onClick="onClick"/>

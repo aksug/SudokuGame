@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/folder"
+    android:title="Folder"
+    android:icon="@drawable/back_img" />
+    <item
+        android:id="@+id/upload"
+        android:title="Upload"
+        android:icon="@drawable/divide_img" />
+    <item
+        android:id="@+id/scan"
+        android:title="Scan"
+        android:icon="@drawable/back_img36" />
+
+</menu>
