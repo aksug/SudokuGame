@@ -22,6 +22,7 @@ public class MenuLevels extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //TODO add back button on the top
         setContentView(R.layout.activity_menu_levels);
+
         //to allow Up
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Log.d(TAG, "in onCreate()");
@@ -31,8 +32,7 @@ public class MenuLevels extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new BottomSheet.Builder(action, R.style.BottomSheet_Dialog)
-                        .title("New")
+                BottomSheet buttomSheet = new BottomSheet.Builder(action, R.style.BottomSheet_Dialog)
                         .grid() // <-- important part
                         .sheet(R.menu.menu_bottom_sheet)
                         .listener(new DialogInterface.OnClickListener() {
@@ -41,6 +41,7 @@ public class MenuLevels extends AppCompatActivity {
                                 // TODO
                             }
                         }).show();
+
 
 //                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();

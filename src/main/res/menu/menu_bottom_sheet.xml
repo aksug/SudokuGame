@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item
-    android:id="@+id/folder"
-    android:title="Folder"
-    android:icon="@drawable/back_img" />
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:backgroundTint="#3F51B5"
+
+    >
     <item
-        android:id="@+id/upload"
-        android:title="Upload"
-        android:icon="@drawable/divide_img" />
+        android:id="@+id/save"
+        android:icon="@drawable/ic_save_black_24dp"
+        android:title="Save" />
+  <!--  <item
+        android:id="@+id/nowaGra"
+        android:icon="@drawable/ic_launch_black_24dp"
+        android:title="New  game"
+        android:color="#FF2070B0"
+        />-->
+
     <item
-        android:id="@+id/scan"
-        android:title="Scan"
-        android:icon="@drawable/back_img36" />
+        android:id="@+id/exit_endGame"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        android:title="End game" />
+    <item
+        android:id="@+id/check"
+        android:icon="@drawable/ic_check_box_black_24dp"
+        android:title="Check" />
 
 </menu>

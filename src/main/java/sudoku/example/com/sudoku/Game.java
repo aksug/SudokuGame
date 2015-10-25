@@ -1,6 +1,7 @@
 package sudoku.example.com.sudoku;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
+
+import com.cocosw.bottomsheet.BottomSheet;
+import com.software.shell.fab.ActionButton;
 
 public class Game extends Activity {
 
@@ -31,6 +35,23 @@ public class Game extends Activity {
         Log.d(TAG, "in onCreate()");
         board = (Board) findViewById(R.id.boardView);
 
+        final Game action = this;
+        ActionButton fab = (ActionButton) findViewById(R.id.action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BottomSheet.Builder(action, R.style.BottomSheet_Dialog)
+                        .title("New")
+                        .grid() // <-- important part
+                        .sheet(R.menu.menu_bottom_sheet)
+                        .listener(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO
+                            }
+                        }).show();
+            }
+        });
     }
 
     public void numberOne(View view) {

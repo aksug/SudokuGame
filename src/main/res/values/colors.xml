@@ -3,7 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="primary_dark">#303f9f</color>
 
     <color name="background">#cf9595</color>
     <color name="big_line">#262626</color>
@@ -13,4 +12,6 @@
     <color name="selection">#f91928</color>
     <color name="start_place">#a31a1a</color>
     <color name="correct_numbers">#20c603</color>
+    <color name="windowBackground">#4fb526</color>
+
 </resources>
