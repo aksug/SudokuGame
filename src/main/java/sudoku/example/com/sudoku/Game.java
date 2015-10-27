@@ -46,7 +46,21 @@ public class Game extends Activity {
                         .listener(new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//
+                                switch (which) {
+                                    case R.id.save:
+                                        Toast.makeText(getApplicationContext(), "Kliknieto opcję save ", Toast.LENGTH_SHORT).show();
+                                        save();
+                                        break;
+                                    case R.id.exit_endGame:
+                                        Toast.makeText(getApplicationContext(), "Kliknieto opcję exit ", Toast.LENGTH_SHORT).show();
+                                        endGame();
+                                        break;
+                                    case R.id.check:
+                                        Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
+
+                                        break;
+
+                                }
                             }
                         }).show();
             }
@@ -55,48 +69,38 @@ public class Game extends Activity {
 
     public void numberOne(View view) {
         board.setNumber(1);
-//        Toast.makeText(getApplicationContext(), "Wcisnieto 1", Toast.LENGTH_SHORT).show();
-
     }
 
     public void numberTwo(View view) {
         board.setNumber(2);
-//        Toast.makeText(getApplicationContext(), "Wcisnieto 2", Toast.LENGTH_SHORT).show();
     }
 
     public void numberThree(View view) {
         board.setNumber(3);
-        //      Toast.makeText(getApplicationContext(), "Wcisnieto 3", Toast.LENGTH_SHORT).show();
     }
 
     public void numberFour(View view) {
         board.setNumber(4);
-        //    Toast.makeText(getApplicationContext(), "Wcisnieto 4", Toast.LENGTH_SHORT).show();
     }
 
     public void numberFive(View view) {
         board.setNumber(5);
-        //  Toast.makeText(getApplicationContext(), "Wcisnieto 5", Toast.LENGTH_SHORT).show();
     }
 
     public void numberSix(View view) {
         board.setNumber(6);
-        //Toast.makeText(getApplicationContext(), "Wcisnieto 6", Toast.LENGTH_SHORT).show();
     }
 
     public void numberSeven(View view) {
         board.setNumber(7);
-//        Toast.makeText(getApplicationContext(), "Wcisnieto 7", Toast.LENGTH_SHORT).show();
     }
 
     public void numberEight(View view) {
         board.setNumber(8);
-        //      Toast.makeText(getApplicationContext(), "Wcisnieto 8", Toast.LENGTH_SHORT).show();
     }
 
     public void numberNine(View view) {
         board.setNumber(9);
-        //    Toast.makeText(getApplicationContext(), "Wcisnieto 9", Toast.LENGTH_SHORT).show();
     }
 
     public void divideSquare(View view) {
@@ -139,29 +143,29 @@ public class Game extends Activity {
 
     }
 
-    public void endGame(View view) {
+    public void endGame() {
 
         LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup, null);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linarlayout);
 
         final PopupWindow popupWindow = new PopupWindow(container, linearLayout.getWidth(), board.getWidth() /*z ta wartoscia jest cos nie tak, czy ona ma w ogole znaczenie*/, true);
-        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight()-popupWindow.getHeight()/2)/2);//czy to jest na srodku
+        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight() - popupWindow.getHeight() / 2) / 2);//czy to jest na srodku
 
-        Button anuluj_button = (Button)container.findViewById(R.id.anulujButton);
-        Button zakoncz_button = (Button)container.findViewById(R.id.zakonczButton);
+        Button anuluj_button = (Button) container.findViewById(R.id.anulujButton);
+        Button zakoncz_button = (Button) container.findViewById(R.id.zakonczButton);
 
         anuluj_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        popupWindow.dismiss();
+                popupWindow.dismiss();
             }
         });
         zakoncz_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                        popupWindow.dismiss();
-                        // TODO go to level pages
+                popupWindow.dismiss();
+                // TODO go to level pages
                 startActivity(new Intent(getApplicationContext(), MenuLevels.class));
             }
         });
