@@ -40,14 +40,13 @@ public class Game extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new BottomSheet.Builder(action, R.style.BottomSheet_Dialog)
-                        .title("New")
+                new BottomSheet.Builder(action, R.style.BottomSheet_StyleDialog)
                         .grid() // <-- important part
                         .sheet(R.menu.menu_bottom_sheet)
                         .listener(new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO
+//
                             }
                         }).show();
             }

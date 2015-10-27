@@ -1,8 +1,11 @@
 package sudoku.example.com.sudoku;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -27,22 +30,31 @@ public class MenuLevels extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Log.d(TAG, "in onCreate()");
 
+        final Context context = getApplicationContext();
+//        Drawable one = context.getResources().getDrawable(R.drawable.ic_save_black_24dp);
+//                                one.setColorFilter(0xffff0000, PorterDuff.Mode.MULTIPLY);
         final MenuLevels action = this;
         ActionButton fab = (ActionButton) findViewById(R.id.action_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BottomSheet buttomSheet = new BottomSheet.Builder(action, R.style.BottomSheet_Dialog)
+                BottomSheet buttomSheet = new BottomSheet.Builder(action, R.style.BottomSheet_StyleDialog)
                         .grid() // <-- important part
                         .sheet(R.menu.menu_bottom_sheet)
                         .listener(new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO
+//
                             }
                         }).show();
 
-
+//                sheet = new BottomSheet.Builder(this, R.style.BottomSheet_CustomizedDialog).grid()
+// .title("To " + adapter.getItem(position)).sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        ListAcitivty.this.onClick(adapter.getItem(position), which);
+//                    }
+//                }).build();
 //                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
             }
