@@ -12,13 +12,16 @@
     </style>
 
     <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
-        <item name="android:backgroundDimAmount">0.3</item>
-        <item name="android:textColorHint">#f55e033d</item>
-        <item name="bs_dialogBackground">#e27c84f7</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:textColorHint">#f5c20e81</item>
+        <!--<item name="bs_dialogBackground">#e27c84f7</item>-->
+        <item name="bs_dialogBackground">@color/colorPrimary</item>
         <item name="bs_dividerColor">#f55e033d</item>
+
         <item name="bs_numColumns">3</item>
         <item name="android:listSelector">@drawable/element_selector</item>
         <item name="bs_listStyle">@style/BottomSheet.StyleList</item>
+
     </style>
 
     <style name="BottomSheet.StyleList" parent="BottomSheet.List.Dark" >

@@ -48,15 +48,8 @@ public class MenuLevels extends AppCompatActivity {
                             }
                         }).show();
 
-//                sheet = new BottomSheet.Builder(this, R.style.BottomSheet_CustomizedDialog).grid()
-// .title("To " + adapter.getItem(position)).sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        ListAcitivty.this.onClick(adapter.getItem(position), which);
-//                    }
-//                }).build();
-//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+int hightBS  = buttomSheet.getWindow().getWindowManager().getDefaultDisplay().getHeight();
+                int distanceMove = view.getHeight();
             }
         });
     }
