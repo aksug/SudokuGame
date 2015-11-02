@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="btn_background_pressed">#d8ef2ab4</color>
+
     <color name="background">#cf9595</color>
     <color name="big_line">#262626</color>
     <color name="small_line">#737373</color>

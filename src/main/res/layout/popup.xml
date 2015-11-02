@@ -1,78 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:backgroundDimAmount="0.6"
-   >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
-       >
+    android:id="@+id/fadePopup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
-        <TextView
-            android:id="@+id/zakonczButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ZAKONCZ GRE"
-            android:layout_weight="2"
-            android:layout_marginLeft="@dimen/tb_button_margin"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:layout_gravity="left"/>
-
-
-        <ImageButton
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@android:drawable/btn_dialog"
-            android:id="@+id/dismissButton"
-            android:layout_gravity="right"
-            android:onClick="onClick"/>
-
-    </LinearLayout>
+    android:background="#AA000000"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="1dp"
-        android:background="@color/colorPrimary"
-        android:layout_gravity="center_horizontal">
-
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Czy rozpocząć nową grę?" />
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:background="@color/colorPrimaryDark">
 
-            <Button
+            <TextView
+                android:id="@+id/zakonczButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Zakoncz"
-                android:id="@+id/zakonczButton"
-                android:layout_weight="2"
-                android:layout_gravity="right"
-                android:onClick="onClick"/>
-
-            <Button
-                android:id="@+id/nowaGraButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nowa Gra"
-                android:layout_weight="2"
                 android:layout_gravity="left"
-                android:onClick="onClick"/>
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="@dimen/tb_button_margin"
+                android:layout_marginTop="2dp"
+                android:layout_weight="2"
+                android:text="ZAKONCZ GRE" />
+
+
+            <ImageButton
+                android:id="@+id/dismissButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:onClick="onClick"
+                android:src="@android:drawable/btn_dialog"
+                android:background="@drawable/button_exit"/>
+            <!--ic_clear_black_24dp-->
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="1dp"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Czy rozpocząć nową grę?" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+                <Button
+                    android:id="@+id/zakonczButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="2"
+                    android:onClick="onClick"
+                    android:text="Zakoncz" />
+
+                <Button
+                    android:id="@+id/nowaGraButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="2"
+                    android:onClick="onClick"
+                    android:text="Nowa Gra" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

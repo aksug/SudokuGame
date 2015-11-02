@@ -1,11 +1,14 @@
 package sudoku.example.com.sudoku;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,6 +36,7 @@ public class Game extends Activity {
     private int[][] userSolutionToSave;
     private ArrayList<int[]> possibleNumbersToSave;
     private DataBoard dataBoardToSave;
+    private LinearLayout gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class Game extends Activity {
         level = bundle.getString("level");
         Log.d(TAG, "in onCreate()");
         board = (Board) findViewById(R.id.boardView);
+        gameView = (LinearLayout)findViewById(R.id.linarlayout);
 //        if(!savedInstanceState.isEmpty()) {//TODO
 //            DataBoard state = savedInstanceState.getParcelable(STATE_GAME);
 ////            resume_game(state);
@@ -65,7 +70,7 @@ public class Game extends Activity {
                                         break;
                                     case R.id.exit_endGame:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję exit ", Toast.LENGTH_SHORT).show();
-                                        endGame();
+                                    endGame();
                                         break;
                                     case R.id.check:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
@@ -178,10 +183,13 @@ return dataBoardToSave;
 
         LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup, null);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linarlayout);
+//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.gameView);
+        int screen_hight= Resources.getSystem().getDisplayMetrics().heightPixels;
+        int screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
+        final PopupWindow popupWindow = new PopupWindow(container, screen_width, screen_hight/*bialy pasek*/, true);
+//        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight() - popupWindow.getHeight() / 2) / 2);//czy to jest na srodku
 
-        final PopupWindow popupWindow = new PopupWindow(container, linearLayout.getWidth(), board.getWidth() /*z ta wartoscia jest cos nie tak, czy ona ma w ogole znaczenie*/, true);
-        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight() - popupWindow.getHeight() / 2) / 2);//czy to jest na srodku
+        popupWindow.showAtLocation(gameView, Gravity.NO_GRAVITY, 0, 0);//czy to jest na srodku
 
         Button nowaGra_button = (Button) container.findViewById(R.id.nowaGraButton);
         Button zakoncz_button = (Button) container.findViewById(R.id.zakonczButton);
