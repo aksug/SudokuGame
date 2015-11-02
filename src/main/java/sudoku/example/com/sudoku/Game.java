@@ -3,6 +3,7 @@ package sudoku.example.com.sudoku;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -19,11 +21,18 @@ import android.widget.Toast;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.software.shell.fab.ActionButton;
 
+import java.util.ArrayList;
+
 public class Game extends Activity {
 
     private String level;
     private Board board;
     private String TAG = "Game";
+    static final String STATE_GAME = "state_game";
+
+    private int[][] userSolutionToSave;
+    private ArrayList<int[]> possibleNumbersToSave;
+    private DataBoard dataBoardToSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +43,10 @@ public class Game extends Activity {
         level = bundle.getString("level");
         Log.d(TAG, "in onCreate()");
         board = (Board) findViewById(R.id.boardView);
-
+//        if(!savedInstanceState.isEmpty()) {//TODO
+//            DataBoard state = savedInstanceState.getParcelable(STATE_GAME);
+////            resume_game(state);
+//        }
         final Game action = this;
         ActionButton fab = (ActionButton) findViewById(R.id.action_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +77,12 @@ public class Game extends Activity {
                         }).show();
             }
         });
+    }
+
+    private void resume_game(DataBoard state) {
+        board.setUser_solution(state.getUsers_solutions());
+        board.setPossible_numbers_squere(state.getUsers_propositionsToFillcCell());
+        board.setDataBoard(state.getDataBoard());
     }
 
     public void numberOne(View view) {
@@ -113,15 +131,15 @@ public class Game extends Activity {
         Toast.makeText(getApplicationContext(), "Wcisnieto CLEAR", Toast.LENGTH_SHORT).show();
     }
 
-
-    public void saveGame(View view) {
-        save();
-    }
-
-    private void save() {
+    private DataBoard save() {
         //TODO
+        userSolutionToSave =  board.getUser_solution();
+        possibleNumbersToSave = board.getPossible_numbers_squere();
+        dataBoardToSave = board.getDataBoard();
+        dataBoardToSave.setUsers_solutions(userSolutionToSave);
+        dataBoardToSave.setUsers_propositionsToFillcCell(possibleNumbersToSave);
+return dataBoardToSave;
         //zapisac do bazy danych, co z podzielona komorka? jak ja do bazy danych musze wiedziec ktora to komorka i jakie proponowane cyfry
-
         //co zapisac?
         // id planszy
         // dopoki nie wrzycasz rozwiazan usera do planszy to tez rozwiazania usera i propozycje
@@ -142,6 +160,19 @@ public class Game extends Activity {
 
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Bundle b = new Bundle();
+        b.putParcelable(STATE_GAME, save());
+        onSaveInstanceState(b);
+
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
 
     public void endGame() {
 
@@ -152,10 +183,11 @@ public class Game extends Activity {
         final PopupWindow popupWindow = new PopupWindow(container, linearLayout.getWidth(), board.getWidth() /*z ta wartoscia jest cos nie tak, czy ona ma w ogole znaczenie*/, true);
         popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight() - popupWindow.getHeight() / 2) / 2);//czy to jest na srodku
 
-        Button anuluj_button = (Button) container.findViewById(R.id.anulujButton);
+        Button nowaGra_button = (Button) container.findViewById(R.id.nowaGraButton);
         Button zakoncz_button = (Button) container.findViewById(R.id.zakonczButton);
+        ImageButton disdmisButton = (ImageButton)container.findViewById(R.id.dismissButton);
 
-        anuluj_button.setOnClickListener(new Button.OnClickListener() {
+        disdmisButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
@@ -164,8 +196,12 @@ public class Game extends Activity {
         zakoncz_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }});
+        nowaGra_button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 popupWindow.dismiss();
-                // TODO go to level pages
                 startActivity(new Intent(getApplicationContext(), MenuLevels.class));
             }
         });

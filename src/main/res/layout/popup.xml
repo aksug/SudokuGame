@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:backgroundDimAmount="0.6"
    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+       >
+
+        <TextView
+            android:id="@+id/zakonczButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ZAKONCZ GRE"
+            android:layout_weight="2"
+            android:layout_marginLeft="@dimen/tb_button_margin"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_gravity="left"/>
+
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@android:drawable/btn_dialog"
+            android:id="@+id/dismissButton"
+            android:layout_gravity="right"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="1dp"
-        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="1dp"
+        android:background="@color/colorPrimary"
         android:layout_gravity="center_horizontal">
+
         >
 
         <TextView
@@ -27,17 +58,17 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anuluj"
-                android:id="@+id/anulujButton"
+                android:text="Zakoncz"
+                android:id="@+id/zakonczButton"
                 android:layout_weight="2"
                 android:layout_gravity="right"
                 android:onClick="onClick"/>
 
             <Button
-                android:id="@+id/zakonczButton"
+                android:id="@+id/nowaGraButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="tak"
+                android:text="Nowa Gra"
                 android:layout_weight="2"
                 android:layout_gravity="left"
                 android:onClick="onClick"/>

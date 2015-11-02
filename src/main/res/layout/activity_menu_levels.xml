@@ -25,21 +25,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="latwy"
-            android:text="@string/latwy_poziom" />
+            android:text="@string/latwy_poziom"
+            android:background="@drawable/button_custom"
+            android:shadowColor="#F4ABFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_margin="10dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="sredni"
-            android:text="@string/sredni_poziom" />
+            android:text="@string/sredni_poziom"
+            android:background="@drawable/button_custom"
+            android:shadowColor="#F4ABFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_margin="10dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:onClick="trudny"
-            android:text="@string/trudny_poziom" />
+            android:text="@string/trudny_poziom"
+            android:background="@drawable/button_custom"
+            android:shadowColor="#F4ABFF"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:layout_margin="10dp" />
     </LinearLayout>
 
 

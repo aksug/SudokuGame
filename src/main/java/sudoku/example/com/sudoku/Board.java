@@ -26,6 +26,7 @@ public class Board extends View {
 
 
     private String stan_gry ="W_TRACIE"; //"ZAPISZ","ZAKONCZ";
+
     private DataBoard dataBoard;
     private String start_board;
     private String solution;
@@ -40,6 +41,7 @@ public class Board extends View {
     private int selected_field_y;
     private boolean[][] divided_cell;
     private ArrayList<int[]> possible_numbers_squere;
+
     private int[][] user_solution;
     private boolean[][] wrong_solution;
 
@@ -303,4 +305,37 @@ public class Board extends View {
         invalidate();
 
     }
+    public ArrayList<int[]> getPossible_numbers_squere() {
+        return possible_numbers_squere;
+    }
+
+    public int[][] getUser_solution() {
+        return user_solution;
+    }
+
+    public DataBoard getDataBoard() {
+        return dataBoard;
+    }
+
+
+    public void setDataBoard(DataBoard dataBoard) {
+        this.dataBoard = dataBoard;
+    }
+
+    public void setStart_board(String start_board) {
+        this.start_board = start_board;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution;
+    }
+
+    public void setUser_solution(int[][] user_solution) {
+        this.user_solution = user_solution;
+    }
+
+    public void setPossible_numbers_squere(ArrayList<int[]> possible_numbers_squere) {
+        this.possible_numbers_squere = possible_numbers_squere;
+    }
+
 }
