@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +13,18 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
@@ -36,18 +42,28 @@ public class Game extends Activity {
     private int[][] userSolutionToSave;
     private ArrayList<int[]> possibleNumbersToSave;
     private DataBoard dataBoardToSave;
-    private LinearLayout gameView;
+    private RelativeLayout gameView;
+    private int screen_hight;
+    private int screen_width;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+
         Bundle bundle = getIntent().getExtras();
         level = bundle.getString("level");
         Log.d(TAG, "in onCreate()");
         board = (Board) findViewById(R.id.boardView);
-        gameView = (LinearLayout)findViewById(R.id.linarlayout);
+        gameView = (RelativeLayout) findViewById(R.id.linarlayout);
+
+        screen_hight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) board.getLayoutParams();
+//        params.height = screen_width;
+        board.setLayoutParams(new RelativeLayout.LayoutParams(screen_width, screen_width));//? TODO
 //        if(!savedInstanceState.isEmpty()) {//TODO
 //            DataBoard state = savedInstanceState.getParcelable(STATE_GAME);
 ////            resume_game(state);
@@ -70,7 +86,7 @@ public class Game extends Activity {
                                         break;
                                     case R.id.exit_endGame:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję exit ", Toast.LENGTH_SHORT).show();
-                                    endGame();
+                                        endGame();
                                         break;
                                     case R.id.check:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
@@ -82,6 +98,7 @@ public class Game extends Activity {
                         }).show();
             }
         });
+
     }
 
     private void resume_game(DataBoard state) {
@@ -138,12 +155,12 @@ public class Game extends Activity {
 
     private DataBoard save() {
         //TODO
-        userSolutionToSave =  board.getUser_solution();
+        userSolutionToSave = board.getUser_solution();
         possibleNumbersToSave = board.getPossible_numbers_squere();
         dataBoardToSave = board.getDataBoard();
         dataBoardToSave.setUsers_solutions(userSolutionToSave);
         dataBoardToSave.setUsers_propositionsToFillcCell(possibleNumbersToSave);
-return dataBoardToSave;
+        return dataBoardToSave;
         //zapisac do bazy danych, co z podzielona komorka? jak ja do bazy danych musze wiedziec ktora to komorka i jakie proponowane cyfry
         //co zapisac?
         // id planszy
@@ -165,6 +182,7 @@ return dataBoardToSave;
 
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -173,6 +191,7 @@ return dataBoardToSave;
         onSaveInstanceState(b);
 
     }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -184,8 +203,7 @@ return dataBoardToSave;
         LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.popup, null);
 //        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.gameView);
-        int screen_hight= Resources.getSystem().getDisplayMetrics().heightPixels;
-        int screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
+
         final PopupWindow popupWindow = new PopupWindow(container, screen_width, screen_hight/*bialy pasek*/, true);
 //        popupWindow.showAtLocation(linearLayout, Gravity.NO_GRAVITY, 0, (linearLayout.getHeight() - popupWindow.getHeight() / 2) / 2);//czy to jest na srodku
 
@@ -193,7 +211,7 @@ return dataBoardToSave;
 
         Button nowaGra_button = (Button) container.findViewById(R.id.nowaGraButton);
         Button zakoncz_button = (Button) container.findViewById(R.id.zakonczButton);
-        ImageButton disdmisButton = (ImageButton)container.findViewById(R.id.dismissButton);
+        ImageButton disdmisButton = (ImageButton) container.findViewById(R.id.dismissButton);
 
         disdmisButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -205,7 +223,8 @@ return dataBoardToSave;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }});
+            }
+        });
         nowaGra_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,4 +257,5 @@ return dataBoardToSave;
         super.onStop();
         save();
     }
+
 }

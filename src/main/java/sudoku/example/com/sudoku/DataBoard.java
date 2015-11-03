@@ -12,7 +12,7 @@ public class DataBoard implements Parcelable {
     private String solution;
     private String id;
     private int[][] users_solutions;
-    private ArrayList<int[]>  users_propositionsToFillcCell;
+    private ArrayList<int[]> users_propositionsToFillcCell;
 
     DataBoard() {
         this.start_board_numbers = "000724000 003000700 206000810 960003082 810002095 300980070 704000150 000267000 009000200";
@@ -69,14 +69,15 @@ public class DataBoard implements Parcelable {
         this.id = id;
     }
 
-    public ArrayList<int[]>  getUsers_propositionsToFillcCell() {
+    public ArrayList<int[]> getUsers_propositionsToFillcCell() {
         return users_propositionsToFillcCell;
     }
 
-    public void setUsers_propositionsToFillcCell(ArrayList<int[]>  users_propositionsToFillcCell) {
+    public void setUsers_propositionsToFillcCell(ArrayList<int[]> users_propositionsToFillcCell) {
         this.users_propositionsToFillcCell = users_propositionsToFillcCell;
     }
-    public DataBoard getDataBoard(){
+
+    public DataBoard getDataBoard() {
         return this;
     }
 

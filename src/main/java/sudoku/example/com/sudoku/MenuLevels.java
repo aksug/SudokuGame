@@ -31,28 +31,10 @@ public class MenuLevels extends AppCompatActivity {
         Log.d(TAG, "in onCreate()");
 
         final Context context = getApplicationContext();
-//        Drawable one = context.getResources().getDrawable(R.drawable.ic_save_black_24dp);
-//                                one.setColorFilter(0xffff0000, PorterDuff.Mode.MULTIPLY);
         final MenuLevels action = this;
-        ActionButton fab = (ActionButton) findViewById(R.id.action_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomSheet buttomSheet = new BottomSheet.Builder(action, R.style.BottomSheet_StyleDialog)
-                        .grid() // <-- important part
-                        .sheet(R.menu.menu_bottom_sheet)
-                        .listener(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//
-                            }
-                        }).show();
 
-int hightBS  = buttomSheet.getWindow().getWindowManager().getDefaultDisplay().getHeight();
-                int distanceMove = view.getHeight();
-            }
-        });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -75,6 +57,7 @@ int hightBS  = buttomSheet.getWindow().getWindowManager().getDefaultDisplay().ge
     public void trudny(View view) {
         runGameActivity("latwy");
     }
+
     private void runGameActivity(String level) {
         Intent intent = new Intent(this, Game.class);
         intent.putExtra("level", level);
