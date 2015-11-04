@@ -61,13 +61,9 @@ public class Game extends Activity {
 
         screen_hight = Resources.getSystem().getDisplayMetrics().heightPixels;
         screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
-//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) board.getLayoutParams();
-//        params.height = screen_width;
+
         board.setLayoutParams(new RelativeLayout.LayoutParams(screen_width, screen_width));//? TODO
-//        if(!savedInstanceState.isEmpty()) {//TODO
-//            DataBoard state = savedInstanceState.getParcelable(STATE_GAME);
-////            resume_game(state);
-//        }
+
         final Game action = this;
         ActionButton fab = (ActionButton) findViewById(R.id.action_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,17 +86,17 @@ public class Game extends Activity {
                                         break;
                                     case R.id.check:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
-
+                                        // przegladam odpowiedzi usera i wylapuje bledne
+                                        board.checkSolution();
                                         break;
-
                                 }
                             }
                         }).show();
             }
         });
-
     }
 
+    //TODO zapisywanie i przywracanie gry !!!
     private void resume_game(DataBoard state) {
         board.setUser_solution(state.getUsers_solutions());
         board.setPossible_numbers_squere(state.getUsers_propositionsToFillcCell());
@@ -154,48 +150,13 @@ public class Game extends Activity {
     }
 
     private DataBoard save() {
-        //TODO
+        //TODO zapisywanie danych do BD
         userSolutionToSave = board.getUser_solution();
         possibleNumbersToSave = board.getPossible_numbers_squere();
         dataBoardToSave = board.getDataBoard();
         dataBoardToSave.setUsers_solutions(userSolutionToSave);
         dataBoardToSave.setUsers_propositionsToFillcCell(possibleNumbersToSave);
         return dataBoardToSave;
-        //zapisac do bazy danych, co z podzielona komorka? jak ja do bazy danych musze wiedziec ktora to komorka i jakie proponowane cyfry
-        //co zapisac?
-        // id planszy
-        // dopoki nie wrzycasz rozwiazan usera do planszy to tez rozwiazania usera i propozycje
-        //podswietlana komorke4
-        // i stworz nowy biekt Board i tam to wszytko porzucaj jako argumenty konstruktora
-//        case "latwy":
-//        latwyDao = daoSession.getLatwyDao();
-//        latwy = latwyDao.loadByRowId(number + 101);
-//        if (latwy != null) {
-//            latwyDao.delete(latwy);
-//        }
-//        latwy = new Latwy((long) number + 101,
-//                plansza.getTable_number(),
-//                plansza.getMysuggestion(),
-//                plansza.getSuggestion());
-//        latwyDao.insert(latwy);
-//        break;
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Bundle b = new Bundle();
-        b.putParcelable(STATE_GAME, save());
-        onSaveInstanceState(b);
-
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
     }
 
     public void endGame() {
@@ -232,12 +193,21 @@ public class Game extends Activity {
                 startActivity(new Intent(getApplicationContext(), MenuLevels.class));
             }
         });
-
-
-// przegladam odpowiedzi usera i wylapuje bledne
-        board.checkSolution();
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Bundle b = new Bundle();
+        b.putParcelable(STATE_GAME, save());
+        onSaveInstanceState(b);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     public void onBackPressed() {
@@ -257,5 +227,4 @@ public class Game extends Activity {
         super.onStop();
         save();
     }
-
 }

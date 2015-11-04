@@ -37,50 +37,6 @@ public class DataBoard implements Parcelable {
         }
     };
 
-    public String getStartBoardNumbers() {
-        return start_board_numbers;
-    }
-
-    public String getBoardSolution() {
-        return solution;
-    }
-
-    public void setStartBoardNumbers(String start_board_numbers) {
-        this.start_board_numbers = start_board_numbers;
-    }
-
-    public void setSolution(String solution) {
-        this.solution = solution;
-    }
-
-    public int[][] getUsers_solutions() {
-        return users_solutions;
-    }
-
-    public void setUsers_solutions(int[][] users_solutions) {
-        this.users_solutions = users_solutions;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public ArrayList<int[]> getUsers_propositionsToFillcCell() {
-        return users_propositionsToFillcCell;
-    }
-
-    public void setUsers_propositionsToFillcCell(ArrayList<int[]> users_propositionsToFillcCell) {
-        this.users_propositionsToFillcCell = users_propositionsToFillcCell;
-    }
-
-    public DataBoard getDataBoard() {
-        return this;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -90,5 +46,51 @@ public class DataBoard implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(start_board_numbers);
         dest.writeString(solution);
+    }
+
+
+    public String getStartBoardNumbers() {
+        return start_board_numbers;
+    }
+
+    public String getBoardSolution() {
+        return solution;
+    }
+
+    public int[][] getUsers_solutions() {
+        return users_solutions;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public DataBoard getDataBoard() {
+        return this;
+    }
+
+    public ArrayList<int[]> getUsers_propositionsToFillcCell() {
+        return users_propositionsToFillcCell;
+    }
+
+
+    public void setStartBoardNumbers(String start_board_numbers) {
+        this.start_board_numbers = start_board_numbers;
+    }
+
+    public void setSolution(String solution) {
+        this.solution = solution;
+    }
+
+    public void setUsers_solutions(int[][] users_solutions) {
+        this.users_solutions = users_solutions;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setUsers_propositionsToFillcCell(ArrayList<int[]> users_propositionsToFillcCell) {
+        this.users_propositionsToFillcCell = users_propositionsToFillcCell;
     }
 }

@@ -23,12 +23,6 @@ import java.util.ArrayList;
 
 public class Board extends View {
 
-    //gift
-//    private final InputStream mStream;
-//    private final Movie mMovie;
-    private long mMoviestart;
-
-
     private String stan_gry = "W_TRACIE"; //"ZAPISZ","ZAKONCZ";
 
     private DataBoard dataBoard;
@@ -83,8 +77,7 @@ public class Board extends View {
             possible_numbers_squere.add(new int[9]);
         }
         user_solution = new int[9][9];
-        //   solution = dataBoard.getBoardSolution();
-        // mistakes = new boolean[9][9];
+
 //tlo planszy
         background = new Paint();
         background.setColor(getResources().getColor(R.color.background));
@@ -127,18 +120,10 @@ public class Board extends View {
         this.width_Number = width_small_square / 5;
         this.width_divided_cell = width_small_square / 3;
 
-
     }
 
 
     public void onDraw(Canvas canvas) {
-        //gift
-        final long now = SystemClock.uptimeMillis();
-        if (mMoviestart == 0) {
-            mMoviestart = now;
-        }
-
-
         //obramowanie i kwadrat
         canvas.drawRect(0, 0, width_big_square, width_big_square, edges_outside);
         canvas.drawRect(margin, 0 + margin, width_big_square - margin, width_big_square - margin, background);
@@ -193,8 +178,6 @@ public class Board extends View {
                             (j * width_small_square + width_Number),
                             ((i + 1) * width_small_square - width_Number),
                             numbers);
-
-
                 }
 
                 //UWAGA  czasami krawedzie nie rysuja sie - TODO
@@ -232,17 +215,12 @@ public class Board extends View {
                 }
             }
         }
-//gift
-//        final int relTime = (int)((now - mMoviestart) % mMovie.duration());
-//        mMovie.setTime(relTime);
-//        mMovie.draw(canvas, 10, 10);
     }
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d("DrawView", "onTouchEvent: " + (int) (event.getX() / width_small_square) + "," + (int) (event.getY() / width_small_square));
-//TODO naprawic momenty kiedy klikasz poza plansze
+//        Log.d("DrawView", "onTouchEvent: " + (int) (event.getX() / width_small_square) + "," + (int) (event.getY() / width_small_square));
         if (event.getAction() == MotionEvent.ACTION_UP) {
 
             int x = (int) (event.getX() / width_small_square);
@@ -286,8 +264,7 @@ public class Board extends View {
         invalidate();
     }
 
-    public void checkSolution() {//TODO
-
+    public void checkSolution() {
 
         solution = dataBoard.getBoardSolution();
         //jesli pole nie jest aktualnie podzielone, mozna sprawdzac pola ktore byly na wstepie jako 0
@@ -307,8 +284,8 @@ public class Board extends View {
         }
         stan_gry = "ZAKONCZ";
         invalidate();
-
     }
+
 
     public ArrayList<int[]> getPossible_numbers_squere() {
         return possible_numbers_squere;

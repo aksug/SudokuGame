@@ -18,21 +18,13 @@ import com.software.shell.fab.ActionButton;
 
 
 public class MenuLevels extends AppCompatActivity {
-    private String TAG = "Menu_levels";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO add back button on the top
         setContentView(R.layout.activity_menu_levels);
-
-        //to allow Up
+        //to allow Up- [come back]
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Log.d(TAG, "in onCreate()");
-
-        final Context context = getApplicationContext();
-        final MenuLevels action = this;
-
     }
 
     @Override
@@ -51,11 +43,11 @@ public class MenuLevels extends AppCompatActivity {
     }
 
     public void sredni(View view) {
-        runGameActivity("latwy");
+        runGameActivity("sredni");
     }
 
     public void trudny(View view) {
-        runGameActivity("latwy");
+        runGameActivity("trudny");
     }
 
     private void runGameActivity(String level) {
