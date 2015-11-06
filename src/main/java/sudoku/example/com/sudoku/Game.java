@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
@@ -32,6 +33,9 @@ import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
 
+import sudoku.example.com.database.BoardDetails;
+import sudoku.example.com.database.DatabaseHandler;
+
 public class Game extends Activity {
 
     private String level;
@@ -46,6 +50,7 @@ public class Game extends Activity {
     private int screen_hight;
     private int screen_width;
 
+    private SharedPreferences mPrefs; // <- to save data
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,19 @@ public class Game extends Activity {
         Log.d(TAG, "in onCreate()");
         board = (Board) findViewById(R.id.boardView);
         gameView = (RelativeLayout) findViewById(R.id.linarlayout);
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        Log.d("Insert: ", "Inserting ..");
+      //  db.addBoard(new BoardDetails("000724000 003000700 206000810 960003082 810002095 300980070 704000150 000267000 009000200", "198724563 453816729 276539814 965173482 817642395 342985671 724398156 531267948 689451237", "latwy", null, null, 0));
+        final BoardDetails board_data = db.getTheMostLeastBoardByDifficultyLevel(level);
+        String log = "Id: " + board_data.getID() + " , " + board_data.getVisibleDigits() + " , " + board_data.getBoardSolution()
+                + " , " + board_data.getDifficultyLevel() + " , " + board_data.getUserSolution()
+                + " , " + board_data.getUserSuggestions() + " ,   " + board_data.getBoardUsed();
+        Log.d("Name: ", log);
+        board.setSolution(board_data.getBoardSolution());
+        board.setStart_board(board_data.getVisibleDigits());
+      //  board.setPossible_numbers_squere(board_data.getUserSuggestions());// TODO zpisywanie possible numbers to database
+        board.setUser_solution(board_data.getUserSolution());
 
         screen_hight = Resources.getSystem().getDisplayMetrics().heightPixels;
         screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -87,7 +105,7 @@ public class Game extends Activity {
                                     case R.id.check:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
                                         // przegladam odpowiedzi usera i wylapuje bledne
-                                        board.checkSolution();
+                                        board.checkSolution(board_data.getBoardSolution());
                                         break;
                                 }
                             }
@@ -97,11 +115,7 @@ public class Game extends Activity {
     }
 
     //TODO zapisywanie i przywracanie gry !!!
-    private void resume_game(DataBoard state) {
-        board.setUser_solution(state.getUsers_solutions());
-        board.setPossible_numbers_squere(state.getUsers_propositionsToFillcCell());
-        board.setDataBoard(state.getDataBoard());
-    }
+
 
     public void numberOne(View view) {
         board.setNumber(1);
@@ -153,7 +167,7 @@ public class Game extends Activity {
         //TODO zapisywanie danych do BD
         userSolutionToSave = board.getUser_solution();
         possibleNumbersToSave = board.getPossible_numbers_squere();
-        dataBoardToSave = board.getDataBoard();
+       // dataBoardToSave = board.getDataBoard();
         dataBoardToSave.setUsers_solutions(userSolutionToSave);
         dataBoardToSave.setUsers_propositionsToFillcCell(possibleNumbersToSave);
         return dataBoardToSave;
@@ -199,9 +213,13 @@ public class Game extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Bundle b = new Bundle();
-        b.putParcelable(STATE_GAME, save());
-        onSaveInstanceState(b);
+//        SharedPreferences.Editor ed = mPrefs.edit();
+//        ed.putString("level", level);
+//        ed.commit();
+//TODO
+//        Bundle b = new Bundle();
+//        b.putParcelable(STATE_GAME, save());
+//        onSaveInstanceState(b);
     }
 
     @Override

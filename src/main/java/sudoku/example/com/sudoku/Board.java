@@ -1,31 +1,20 @@
 package sudoku.example.com.sudoku;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Movie;
 import android.graphics.Paint;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class Board extends View {
 
     private String stan_gry = "W_TRACIE"; //"ZAPISZ","ZAKONCZ";
 
-    private DataBoard dataBoard;
+    //private DataBoard dataBoard;
     private String start_board;
     private String solution;
 
@@ -64,9 +53,9 @@ public class Board extends View {
 
     private void init() {
 
-        dataBoard = new DataBoard();
-        // plansza wyjsciowa - czyli ta z danmi elementami
-        start_board = dataBoard.getStartBoardNumbers();
+//        dataBoard = new DataBoard();
+//        // plansza wyjsciowa - czyli ta z danmi elementami
+//        start_board = dataBoard.getStartBoardNumbers();
         margin = 5;
 
         divided_cell = new boolean[9][9];
@@ -264,9 +253,10 @@ public class Board extends View {
         invalidate();
     }
 
-    public void checkSolution() {
+    public void checkSolution(String board_solution) {
 
-        solution = dataBoard.getBoardSolution();
+//        solution = dataBoard.getBoardSolution();
+        solution = board_solution;
         //jesli pole nie jest aktualnie podzielone, mozna sprawdzac pola ktore byly na wstepie jako 0
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -295,14 +285,14 @@ public class Board extends View {
         return user_solution;
     }
 
-    public DataBoard getDataBoard() {
-        return dataBoard;
-    }
-
-
-    public void setDataBoard(DataBoard dataBoard) {
-        this.dataBoard = dataBoard;
-    }
+//    public DataBoard getDataBoard() {
+//        return dataBoard;
+//    }
+//
+//
+//    public void setDataBoard(DataBoard dataBoard) {
+//        this.dataBoard = dataBoard;
+//    }
 
     public void setStart_board(String start_board) {
         this.start_board = start_board;
@@ -312,12 +302,25 @@ public class Board extends View {
         this.solution = solution;
     }
 
-    public void setUser_solution(int[][] user_solution) {
-        this.user_solution = user_solution;
+    public void setUser_solution(String user_solution) {
+        if (user_solution != null) {
+            String[] row = user_solution.split(" ");
+            int[][] solution = new int[9][9];
+            for (int i = 0; i < solution.length; i++) {
+                for (int j = 0; j < solution.length; j++) {
+                    String row_value = row[i];
+                    int value = Character.getNumericValue(row_value.charAt(j));
+                    solution[i][j] = value;
+                }
+            }
+            this.user_solution = solution;
+        }
     }
 
     public void setPossible_numbers_squere(ArrayList<int[]> possible_numbers_squere) {
-        this.possible_numbers_squere = possible_numbers_squere;
+        //TODO
+//        ArrayList<int[]> possible_numbers_squere
+//        this.possible_numbers_squere = possible_numbers_squere;
     }
 
 }
