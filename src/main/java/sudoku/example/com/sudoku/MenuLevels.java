@@ -43,11 +43,11 @@ public class MenuLevels extends AppCompatActivity {
     }
 
     public void sredni(View view) {
-        runGameActivity("sredni");
+        runGameActivity("latwy");
     }
 
     public void trudny(View view) {
-        runGameActivity("trudny");
+        runGameActivity("latwy");
     }
 
     private void runGameActivity(String level) {

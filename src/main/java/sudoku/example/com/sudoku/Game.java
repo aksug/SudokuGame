@@ -1,40 +1,33 @@
 package sudoku.example.com.sudoku;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.drawable.BitmapDrawable;
+import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import sudoku.example.com.database.BoardDetails;
-import sudoku.example.com.database.DatabaseHandler;
+import sudoku.example.com.model.DaoMaster;
+import sudoku.example.com.model.DaoSession;
+import sudoku.example.com.model.SudokuBoards;
+import sudoku.example.com.model.SudokuBoardsDao;
 
 public class Game extends Activity {
 
@@ -50,7 +43,11 @@ public class Game extends Activity {
     private int screen_hight;
     private int screen_width;
 
-    private SharedPreferences mPrefs; // <- to save data
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private SudokuBoardsDao board_data;
+    private List<SudokuBoards> founded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +61,22 @@ public class Game extends Activity {
         board = (Board) findViewById(R.id.boardView);
         gameView = (RelativeLayout) findViewById(R.id.linarlayout);
 
-        DatabaseHandler db = new DatabaseHandler(this);
-        Log.d("Insert: ", "Inserting ..");
-      //  db.addBoard(new BoardDetails("000724000 003000700 206000810 960003082 810002095 300980070 704000150 000267000 009000200", "198724563 453816729 276539814 965173482 817642395 342985671 724398156 531267948 689451237", "latwy", null, null, 0));
-        final BoardDetails board_data = db.getTheMostLeastBoardByDifficultyLevel(level);
-        String log = "Id: " + board_data.getID() + " , " + board_data.getVisibleDigits() + " , " + board_data.getBoardSolution()
-                + " , " + board_data.getDifficultyLevel() + " , " + board_data.getUserSolution()
-                + " , " + board_data.getUserSuggestions() + " ,   " + board_data.getBoardUsed();
-        Log.d("Name: ", log);
-        board.setSolution(board_data.getBoardSolution());
-        board.setStart_board(board_data.getVisibleDigits());
-      //  board.setPossible_numbers_squere(board_data.getUserSuggestions());// TODO zpisywanie possible numbers to database
-        board.setUser_solution(board_data.getUserSolution());
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(),
+                "Boards.sqlite", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        board_data = daoSession.getSudokuBoardsDao();
+//        addDataToDataBase("000724000 003000700 206000810 960003082 810002095 300980070 704000150 000267000 009000200", "198724563 453816729 276539814 965173482 817642395 342985671 724398156 531267948 689451237", "latwy", null, null, false);
+        returnAllData(board_data);
+        final SudokuBoards foundBoard = findBoardByDifficultyLevel(level);
+        updateBoardsUsedValue(foundBoard);
+
+        board.setSolution(foundBoard.getSolution());
+        board.setStart_board(foundBoard.getVisible_numbers());
+        //  board.setPossible_numbers_squere(board_data.getUserSuggestions());// TODO zpisywanie possible numbers to database
+        board.setUser_solution(foundBoard.getUsers_solution());
 
         screen_hight = Resources.getSystem().getDisplayMetrics().heightPixels;
         screen_width = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -105,7 +106,7 @@ public class Game extends Activity {
                                     case R.id.check:
                                         Toast.makeText(getApplicationContext(), "Kliknieto opcję check ", Toast.LENGTH_SHORT).show();
                                         // przegladam odpowiedzi usera i wylapuje bledne
-                                        board.checkSolution(board_data.getBoardSolution());
+                                        board.checkSolution(foundBoard.getSolution());
                                         break;
                                 }
                             }
@@ -167,7 +168,7 @@ public class Game extends Activity {
         //TODO zapisywanie danych do BD
         userSolutionToSave = board.getUser_solution();
         possibleNumbersToSave = board.getPossible_numbers_squere();
-       // dataBoardToSave = board.getDataBoard();
+        // dataBoardToSave = board.getDataBoard();
         dataBoardToSave.setUsers_solutions(userSolutionToSave);
         dataBoardToSave.setUsers_propositionsToFillcCell(possibleNumbersToSave);
         return dataBoardToSave;
@@ -244,5 +245,71 @@ public class Game extends Activity {
     protected void onStop() {
         super.onStop();
         save();
+    }
+
+    private void returnAllData(SudokuBoardsDao board_data) {
+
+        List<SudokuBoards> entities = board_data.queryBuilder().limit(1).list();
+        Log.d("NAME", "ilosc rows = " + entities.size());
+        for (SudokuBoards cn : entities) {
+            String log = "Id: " + cn.getId() + " , " + cn.getVisible_numbers() + " , " + cn.getSolution() + " , " + cn.getLevel() + " , " + cn.getUsers_solution()
+                    + " , " + cn.getUsers_suggestions() + " ,   " + cn.getBoard_used();
+            // Writing Boards to log
+            //     db.deleteContact(cn);
+            Log.d("Name: ", log);
+        }
+    }
+
+    private void addDataToDataBase(String start_data, String solution, String level, String users_solution, String users_suggestions, boolean used) {
+        SudokuBoards board_details = new SudokuBoards(null, start_data, solution, level, users_solution, users_suggestions, used);
+        try {
+            long resultInsert = board_data.insert(board_details);
+        } catch (SQLiteConstraintException e) {
+
+
+            //select boardso tym start-NUMBERS  i po update row with this id
+            founded = board_data.queryBuilder().where(SudokuBoardsDao.Properties.Visible_numbers.eq(start_data)).limit(1).list();
+            founded.get(0).setSolution(solution);
+            founded.get(0).setUsers_suggestions(users_suggestions);
+            founded.get(0).setUsers_solution(users_solution);
+            founded.get(0).setLevel(level);
+            founded.get(0).setBoard_used(used);
+
+            board_data.update(founded.get(0));
+
+        }
+    }
+
+    private SudokuBoards findBoardByDifficultyLevel(String level) {
+        SudokuBoards board;
+        List<SudokuBoards> found = board_data.queryBuilder()
+                .where(SudokuBoardsDao.Properties.Level.eq(level),
+                        SudokuBoardsDao.Properties.Board_used.eq(false)).list();
+        if (found.size() != 0) {
+
+            Log.d("FOUND! = ", "to: " + found.get(0).getId() + ", " + found.get(0).getVisible_numbers() + ", " + found.get(0).getSolution() + ", " + found.get(0).getBoard_used());
+            board = found.get(0);
+        } else {
+            updateAllRowsChangeUsedValue(level);
+            board = findBoardByDifficultyLevel(level);
+        }
+        return board;
+
+    }
+
+    private void updateAllRowsChangeUsedValue(String level) {
+
+        List<SudokuBoards> founded = board_data.queryBuilder().where(SudokuBoardsDao.Properties.Level.eq(level)).list();
+        for (SudokuBoards b : founded) {
+            SudokuBoards row = board_data.load(b.getId());
+            row.setBoard_used(false);
+            board_data.update(row);
+        }
+    }
+
+    private void updateBoardsUsedValue(SudokuBoards foundBoard) {
+        SudokuBoards row = board_data.load(foundBoard.getId());
+        row.setBoard_used(true);
+        board_data.update(row);
     }
 }

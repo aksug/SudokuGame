@@ -227,6 +227,8 @@ public class Board extends View {
     }
 
 
+
+
     public void setNumber(int n) {
         //wypisz odpowiedz w polu
         if (!divided_cell[selected_field_y][selected_field_x]) {

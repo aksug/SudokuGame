@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SudokuGame.iml" filepath="$PROJECT_DIR$/SudokuGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greenDAO_gen/greenDAO_gen.iml" filepath="$PROJECT_DIR$/greenDAO_gen/greenDAO_gen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greendao/greendao.iml" filepath="$PROJECT_DIR$/greendao/greendao.iml" />
     </modules>
   </component>
 </project>

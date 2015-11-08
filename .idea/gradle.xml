@@ -9,6 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/greenDAO_gen" />
+            <option value="$PROJECT_DIR$/greendao" />
           </set>
         </option>
       </GradleProjectSettings>

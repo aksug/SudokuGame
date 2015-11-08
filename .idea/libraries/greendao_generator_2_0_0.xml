@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="greendao-generator-2.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/greenDAO_gen/libs/greendao-generator-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
